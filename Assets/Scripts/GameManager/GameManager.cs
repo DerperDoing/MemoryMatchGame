@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
         EventAggregator.changeGameStateEvent += OnStateChange;
         EventAggregator.cardSelectedEvent += CheckOpenedCardCount;
         EventAggregator.matchedEvent += ResetOpenedCardCount;
+        EventAggregator.selectedLevelIndexEvent += LoadLevel;
     }    
 
     private void OnDisable()
@@ -67,6 +68,7 @@ public class GameManager : MonoBehaviour
         EventAggregator.changeGameStateEvent -= OnStateChange;
         EventAggregator.cardSelectedEvent -= CheckOpenedCardCount;
         EventAggregator.matchedEvent -= ResetOpenedCardCount;
+        EventAggregator.selectedLevelIndexEvent -= LoadLevel;
     }
 
     private void Start()

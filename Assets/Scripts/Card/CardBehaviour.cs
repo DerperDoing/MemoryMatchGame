@@ -38,7 +38,7 @@ public class CardBehaviour : MonoBehaviour
     private void Start()
     {
         cardFlipper = GetComponent<FlipCard>();
-        isFaceUp = false;        
+        isFaceUp = true;        
     }
 
     public void Init(int cardValue)

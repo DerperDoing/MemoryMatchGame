@@ -13,4 +13,5 @@ public class EventAggregator
     public static Action twoCardsSelectedEvent;
     public static Action<LevelData> setupLevelEvent;
     public static Action<int> selectedLevelIndexEvent;
+    public static Action startLevelEvent;
 }

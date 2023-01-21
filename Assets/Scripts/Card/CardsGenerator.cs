@@ -21,8 +21,8 @@ public class CardsGenerator : MonoBehaviour
     private void GenerateCards(LevelData levelData)
     {
         GenerateMatrix(levelData.RowNum, levelData.ColNum, (row,col,val) =>
-        {
-            GameObject card = Instantiate(cardPrefab, new Vector2(row, col), Quaternion.identity, transform);
+        {            
+            GameObject card = Instantiate(cardPrefab, new Vector2(col, row), Quaternion.identity, transform);
             card.GetComponent<CardBehaviour>().Init(val);
         });
     }
@@ -40,7 +40,7 @@ public class CardsGenerator : MonoBehaviour
         int totalCount = rows * columns;
         totalCount = totalCount % 2 == 0 ? totalCount : totalCount - 1;
 
-        int[] numbers = Enumerable.Range(1, rows * columns / 2).ToArray();
+        int[] numbers = Enumerable.Range(1, totalCount / 2).ToArray();
         int[] duplicateNumbers = numbers.Concat(numbers).ToArray();
         Shuffle(duplicateNumbers);
 
@@ -49,7 +49,7 @@ public class CardsGenerator : MonoBehaviour
         {
             for (int j = 0; j < columns; j++)
             {
-                matrix[i, j] = duplicateNumbers[index];
+                matrix[i, j] = duplicateNumbers[index];                
                 matrixValue?.Invoke(i, j, duplicateNumbers[index]);
                 index++;
             }

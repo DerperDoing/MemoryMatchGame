@@ -4,18 +4,8 @@ using UnityEngine;
 using System;
 using System.Linq;
 
-public class Matrix : MonoBehaviour
+public class MatrixGenerator
 {
-    [SerializeField] int r = 3;
-    [SerializeField] int c = 5;
-
-    //For testing
-    [NaughtyAttributes.Button("Regen Matrix")]
-    private void MethodTwo()
-    {
-        GenerateMatrix(r, c);
-    }
-
     public void GenerateMatrix(int rows, int columns)
     {
         ValidateValues(ref rows, ref columns);
@@ -65,7 +55,7 @@ public class Matrix : MonoBehaviour
         for (int i = 0; i < array.Length; i++)
         {
             int randomIndex = UnityEngine.Random.Range(0, array.Length); ;            
-            (array[randomIndex], array[i]) = (array[i], array[randomIndex]); //Using tuple to swap. VSStudio suggestion.
+            (array[randomIndex], array[i]) = (array[i], array[randomIndex]); //Using tuple to swap. VisualStudio suggestion.
         }
     }
 

@@ -6,11 +6,11 @@ using System.Linq;
 
 public class MatrixGenerator
 {
-    public void GenerateMatrix(int rows, int columns)
+    public void GenerateMatrix(int rows, int columns, Action<int> matrixValue)
     {
         ValidateValues(ref rows, ref columns);
 
-        Generate(rows, columns);
+        Generate(rows, columns, matrixValue);
     }
 
     private void ValidateValues(ref int rows, ref int columns)
@@ -28,7 +28,7 @@ public class MatrixGenerator
         }
     }
 
-    private void Generate(int rows, int columns)
+    private void Generate(int rows, int columns, Action<int> matrixValue)
     {       
         int[,] matrix = new int[rows, columns];
         
@@ -42,7 +42,7 @@ public class MatrixGenerator
             for (int j = 0; j < columns; j++)
             {
                 matrix[i, j] = duplicateNumbers[index];
-                EventAggregator.filledValueEvent?.Invoke(i, j, duplicateNumbers[index]);
+                matrixValue?.Invoke(duplicateNumbers[index]);                
                 index++;
             }
         }

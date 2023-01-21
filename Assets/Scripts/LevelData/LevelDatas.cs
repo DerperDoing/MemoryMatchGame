@@ -9,4 +9,6 @@ public class LevelDatas : ScriptableObject
     [SerializeField]
     [Expandable]
     private List<LevelData> levelDatas;
+
+    public List<LevelData> LevelDataList => levelDatas;
 }

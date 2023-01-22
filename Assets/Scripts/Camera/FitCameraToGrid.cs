@@ -26,7 +26,6 @@ public class FitCameraToGrid : MonoBehaviour
     {
         if (mainCam == null) return;
 
-        Debug.Log($"CameraFitter :: Col: {levelData.ColNum}, Rows: {levelData.RowNum}");
         mainCam.transform.localPosition = new Vector3((levelData.ColNum / 2f) - 0.5f, (levelData.RowNum / 2f) - 0.5f, -10);             
         mainCam.orthographicSize = (levelData.RowNum / 2f) + padding;        
     }

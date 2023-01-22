@@ -22,7 +22,7 @@ public class CardsGenerator : MonoBehaviour
     {
         GenerateMatrix(levelData.RowNum, levelData.ColNum, (row,col,val) =>
         {            
-            GameObject card = Instantiate(cardPrefab, new Vector2(col, row), Quaternion.identity, transform);
+            GameObject card = Instantiate(cardPrefab, new Vector2(col, row), cardPrefab.transform.rotation, transform);
             card.GetComponent<CardBehaviour>().Init(val);
         });
     }

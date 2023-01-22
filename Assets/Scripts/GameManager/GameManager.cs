@@ -71,6 +71,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        OnStateChange(GameStates.Home);
         ResetOpenedCardCount();
     }
 
@@ -142,6 +143,8 @@ public class GameManager : MonoBehaviour
         gameUIGO = Instantiate(gameUIPrefab, uiCanvas.transform);
     }
 
+
+
     private void LoadLevel(int levelIndex)
     {        
         ResetOpenedCardCount();
@@ -151,6 +154,9 @@ public class GameManager : MonoBehaviour
         if (homeGO != null) Destroy(homeGO);        
         if (levelSelectGO != null) Destroy(levelSelectGO);
 
+        if (levelSuccessGO != null) levelSuccessGO.SetActive(false);
+        if (levelFailGO != null) levelFailGO.SetActive(false);
+       
         if (gameUIGO == null)
         {
             gameUIGO = Instantiate(gameUIPrefab, uiCanvas.transform);
@@ -192,7 +198,7 @@ public class GameManager : MonoBehaviour
     {
         if (levelFailGO == null)
         {
-            levelFailGO = Instantiate(levelFailGO, uiCanvas.transform);
+            levelFailGO = Instantiate(levelFailPrefab, uiCanvas.transform);
         }        
 
         levelFailGO.SetActive(true);
@@ -217,6 +223,11 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < uiCanvas.transform.childCount; i++)
         {
             Destroy(uiCanvas.transform.GetChild(i).gameObject);
+        }
+
+        if (cardsGeneratorGO != null)
+        {
+            Destroy(cardsGeneratorGO);
         }
     }
 }

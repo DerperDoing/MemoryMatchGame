@@ -12,6 +12,7 @@ public class Timer : MonoBehaviour
     private float fillSpeed = 5f;
 
     private float timeLeft;
+    private float maxTime;
     private float incrementAmount;
     private float initialFillAmount;
     private float targetFillAmount;
@@ -22,24 +23,28 @@ public class Timer : MonoBehaviour
     {
         EventAggregator.setupLevelEvent += SetValues;
         EventAggregator.changeGameStateEvent += OnGameStateChange;
+        EventAggregator.matchedEvent += RewardTime;
     }
 
     private void OnDisable()
     {
         EventAggregator.setupLevelEvent -= SetValues;
         EventAggregator.changeGameStateEvent -= OnGameStateChange;
+        EventAggregator.matchedEvent -= RewardTime;
 
         StopTimer();
     }    
 
     private void SetValues(LevelData levelData)
     {
-        timeLeft = levelData.MaxTime;
+        maxTime = levelData.MaxTime;
         incrementAmount = levelData.RewardTime;
+
+        timeLeft = maxTime;
 
         timerBar.fillAmount = 1;
         initialFillAmount = timerBar.fillAmount;
-        targetFillAmount = timerBar.fillAmount;
+        targetFillAmount = initialFillAmount;        
     }
 
     private void OnGameStateChange(GameStates newState)
@@ -58,19 +63,29 @@ public class Timer : MonoBehaviour
     }
 
     IEnumerator DecrementTimer()
-    {        
+    {
         while (timeLeft > 0)
         {
             yield return new WaitForEndOfFrame();
-
+            
             timeLeft -= Time.deltaTime;
-            targetFillAmount = initialFillAmount * (timeLeft / 60.0f);
+            targetFillAmount = initialFillAmount * (timeLeft / maxTime);
             timerBar.fillAmount = Mathf.Lerp(timerBar.fillAmount, targetFillAmount, fillSpeed * Time.deltaTime);
         }
+        timerBar.fillAmount = 0;
 
         EventAggregator.changeGameStateEvent?.Invoke(GameStates.LevelFailed);
 
         StopTimer();
+    }
+
+    private void RewardTime(bool matched)
+    {
+        if (matched)
+        {
+            timeLeft += incrementAmount;
+            timeLeft = timeLeft >= maxTime ? maxTime : timeLeft;
+        }
     }
 
     private void StopTimer()
@@ -80,16 +95,5 @@ public class Timer : MonoBehaviour
             StopCoroutine(coroutine);
         }
         coroutine = null;
-    }
-
-
-    //TODO: Remove later
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            timeLeft += incrementAmount;
-            targetFillAmount = initialFillAmount * (timeLeft / 60.0f);
-        }
     }
 }

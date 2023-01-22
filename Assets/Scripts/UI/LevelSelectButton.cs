@@ -27,6 +27,7 @@ public class LevelSelectButton : MonoBehaviour
 
     private void SelectLevel()
     {
+        EventAggregator.buttonPressedEvent?.Invoke();
         EventAggregator.selectedLevelIndexEvent?.Invoke(index);
     }
 }

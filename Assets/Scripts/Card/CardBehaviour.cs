@@ -10,6 +10,7 @@ public class CardBehaviour : MonoBehaviour
 
     private Collider2D collider;
     private FlipCard cardFlipper;
+    private ZoomCard cardScaler;
 
     private bool isFaceUp;
 
@@ -38,6 +39,7 @@ public class CardBehaviour : MonoBehaviour
     private void Start()
     {
         cardFlipper = GetComponent<FlipCard>();
+        cardScaler = GetComponent<ZoomCard>();
         isFaceUp = true;        
     }
 
@@ -64,8 +66,12 @@ public class CardBehaviour : MonoBehaviour
                 });            
             }
             else if (matched)
-            {                
-                Destroy(gameObject);
+            {
+                collider.enabled = false;
+                cardScaler.Zoom(() =>
+                {
+                    Destroy(gameObject);
+                });
             }
         }
     }

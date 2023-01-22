@@ -30,6 +30,7 @@ public class ChangeGameState : MonoBehaviour
 
     private void ChangeState()
     {
+        EventAggregator.buttonPressedEvent?.Invoke();
         EventAggregator.changeGameStateEvent?.Invoke(switchTo);
     }
 }

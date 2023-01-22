@@ -74,6 +74,8 @@ public class AudioButtons : MonoBehaviour
         isMuted = !isMuted;
 
         SetSprite();
+
+        EventAggregator.buttonPressedEvent?.Invoke();
     }
 
     private void SetSprite()

@@ -299,6 +299,7 @@ GameObject:
   - component: {fileID: 1149567696175217787}
   - component: {fileID: 2297605760662393537}
   - component: {fileID: 6336007431797821536}
+  - component: {fileID: 8599345432175781483}
   m_Layer: 0
   m_Name: Card
   m_TagString: Untagged
@@ -375,6 +376,20 @@ MonoBehaviour:
   flipSpeed: 1.5
   cardFrontGO: {fileID: 4433358846087207132}
   cardBackGO: {fileID: 2235973490058825162}
+--- !u!114 &8599345432175781483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6976054585883895637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a1cec8c3a48442c78537487d2cb90cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zoomSpeed: 5
+  targetScale: {x: 0, y: 0}
 --- !u!1 &8814612337522361217
 GameObject:
   m_ObjectHideFlags: 0

@@ -30,6 +30,9 @@ public class MatchChecker : MonoBehaviour
     private void Setup(LevelData data = null)
     {
         currentIndex = 0;
+        flippedValues[0] = -1;
+        flippedValues[1] = -2;
+
         if (data != null)
         {
             int totalCount = (data.ColNum * data.RowNum);

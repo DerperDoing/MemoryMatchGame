@@ -689,7 +689,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 2075888901}
   sfxSource: {fileID: 982959154}
-  cardSelectClip: {fileID: 0}
+  buttonPressClip: {fileID: 8300000, guid: 0a843cba012be4fea8e02353f09a43ca, type: 3}
+  cardSelectClip: {fileID: 8300000, guid: eecb17058bd784a489afb4505bb6f98d, type: 3}
   cardsMatchedClip: {fileID: 0}
   levelCompletedClip: {fileID: 0}
   levelFailedClip: {fileID: 0}
@@ -853,7 +854,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: da0bc7e0ff97c4516af418d934533d53, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.6
   m_Pitch: 1

@@ -19,6 +19,9 @@ public class AudioManager : MonoBehaviour
     private AudioSource sfxSource;
 
     [SerializeField]
+    private AudioClip buttonPressClip;
+
+    [SerializeField]
     private AudioClip cardSelectClip;
 
     [SerializeField]
@@ -46,7 +49,8 @@ public class AudioManager : MonoBehaviour
     {
         EventAggregator.changeGameStateEvent += OnGameStateChange;
         EventAggregator.cardSelectedEvent += OnCardSelect;
-        EventAggregator.matchedEvent += OnCardsMatched;        
+        EventAggregator.matchedEvent += OnCardsMatched;
+        EventAggregator.buttonPressedEvent += OnButtonPress;
     }
 
     private void OnDisable()
@@ -54,6 +58,7 @@ public class AudioManager : MonoBehaviour
         EventAggregator.changeGameStateEvent -= OnGameStateChange;
         EventAggregator.cardSelectedEvent -= OnCardSelect;
         EventAggregator.matchedEvent -= OnCardsMatched;
+        EventAggregator.buttonPressedEvent -= OnButtonPress;
     }
 
     private void OnGameStateChange(GameStates newState)
@@ -72,15 +77,20 @@ public class AudioManager : MonoBehaviour
                 PlaySfx(levelFailedClip);
                 break;            
 
-            default:
-                sfxSource.Stop();
-                break;
+            //default:
+            //    sfxSource.Stop();
+            //    break;
         }
     }
 
     private void OnCardSelect()
     {
         PlaySfx(cardSelectClip);
+    }
+
+    private void OnButtonPress()
+    {
+        PlaySfx(buttonPressClip);
     }
 
     private void OnCardsMatched(bool matched)
@@ -113,8 +123,7 @@ public class AudioManager : MonoBehaviour
 
     private void ToggleSfx()
     {
-        sfxMuted = !sfxMuted;
-        sfxSource.enabled = sfxMuted;        
+        sfxMuted = !sfxMuted;             
     }
 
     private void ToggleMusic()

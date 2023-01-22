@@ -11,6 +11,7 @@ public class CardBehaviour : MonoBehaviour
     private Collider2D collider;
     private FlipCard cardFlipper;
     private ZoomCard cardScaler;
+    private ParticleSystem particleSystem;
 
     private bool isFaceUp;
 
@@ -40,7 +41,10 @@ public class CardBehaviour : MonoBehaviour
     {
         cardFlipper = GetComponent<FlipCard>();
         cardScaler = GetComponent<ZoomCard>();
-        isFaceUp = true;        
+        particleSystem = GetComponentInChildren<ParticleSystem>();
+
+        isFaceUp = true;
+        collider.enabled = false;
     }
 
     public void Init(int cardValue)
@@ -78,6 +82,8 @@ public class CardBehaviour : MonoBehaviour
 
     private void OnCardSelect()
     {
+        particleSystem.Play();
+
         EventAggregator.cardSelectedEvent?.Invoke();
 
         cardFlipper.Flip(isFaceUp, () =>

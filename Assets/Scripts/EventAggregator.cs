@@ -15,4 +15,5 @@ public class EventAggregator
     public static Action<int> selectedLevelIndexEvent;
     public static Action startLevelEvent;
     public static Action buttonPressedEvent;
+    public static Func<int> getCurrentLvlIndexEvent;
 }

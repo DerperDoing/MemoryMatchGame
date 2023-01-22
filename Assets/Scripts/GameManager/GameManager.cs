@@ -59,6 +59,7 @@ public class GameManager : MonoBehaviour
         EventAggregator.cardSelectedEvent += CheckOpenedCardCount;
         EventAggregator.matchedEvent += ResetOpenedCardCount;
         EventAggregator.selectedLevelIndexEvent += LoadLevel;
+        EventAggregator.getCurrentLvlIndexEvent += GetLevelIndex;
     }    
 
     private void OnDisable()
@@ -67,21 +68,13 @@ public class GameManager : MonoBehaviour
         EventAggregator.cardSelectedEvent -= CheckOpenedCardCount;
         EventAggregator.matchedEvent -= ResetOpenedCardCount;
         EventAggregator.selectedLevelIndexEvent -= LoadLevel;
+        EventAggregator.getCurrentLvlIndexEvent -= GetLevelIndex;
     }
 
     private void Start()
     {
         OnStateChange(GameStates.Home);
         ResetOpenedCardCount();
-    }
-
-    //TODO: Remove later
-    private void Update()
-    {
-        if (Input.GetKeyUp(KeyCode.S))
-        {            
-            LoadLevel(testLevel);            
-        }
     }
 
     private void OnStateChange(GameStates newState)
@@ -143,8 +136,6 @@ public class GameManager : MonoBehaviour
         gameUIGO = Instantiate(gameUIPrefab, uiCanvas.transform);
     }
 
-
-
     private void LoadLevel(int levelIndex)
     {        
         ResetOpenedCardCount();
@@ -202,6 +193,11 @@ public class GameManager : MonoBehaviour
         }        
 
         levelFailGO.SetActive(true);
+    }
+
+    private int GetLevelIndex()
+    {
+        return currentLevelIndex;
     }
 
     private void CheckOpenedCardCount()

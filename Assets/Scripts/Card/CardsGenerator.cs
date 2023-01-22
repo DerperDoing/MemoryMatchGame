@@ -21,9 +21,12 @@ public class CardsGenerator : MonoBehaviour
     private void GenerateCards(LevelData levelData)
     {
         GenerateMatrix(levelData.RowNum, levelData.ColNum, (row,col,val) =>
-        {            
-            GameObject card = Instantiate(cardPrefab, new Vector2(col, row), cardPrefab.transform.rotation, transform);
-            card.GetComponent<CardBehaviour>().Init(val);
+        {
+            if (val > 0)
+            {
+                GameObject card = Instantiate(cardPrefab, new Vector2(col, row), cardPrefab.transform.rotation, transform);
+                card.GetComponent<CardBehaviour>().Init(val);
+            }
         });
     }
 
@@ -49,8 +52,15 @@ public class CardsGenerator : MonoBehaviour
         {
             for (int j = 0; j < columns; j++)
             {
-                matrix[i, j] = duplicateNumbers[index];                
-                matrixValue?.Invoke(i, j, duplicateNumbers[index]);
+                if (index < duplicateNumbers.Length)
+                {
+                    matrix[i, j] = duplicateNumbers[index];                
+                    matrixValue?.Invoke(i, j, duplicateNumbers[index]);
+                }
+                else
+                {
+                    matrixValue?.Invoke(i, j, -1);
+                }
                 index++;
             }
         }

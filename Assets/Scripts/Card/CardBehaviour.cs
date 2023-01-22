@@ -24,12 +24,14 @@ public class CardBehaviour : MonoBehaviour
     {        
         EventAggregator.matchedEvent += OnMatched;
         EventAggregator.twoCardsSelectedEvent += DisableInteraction;
+        EventAggregator.changeGameStateEvent += OnGameStateChange;
     }
 
     private void OnDisable()
     {     
         EventAggregator.matchedEvent -= OnMatched;
         EventAggregator.twoCardsSelectedEvent -= DisableInteraction;
+        EventAggregator.changeGameStateEvent -= OnGameStateChange;
     }
 
     private void OnMouseDown()
@@ -94,6 +96,14 @@ public class CardBehaviour : MonoBehaviour
         isFaceUp = !isFaceUp;
 
         collider.enabled = false;
+    }
+
+    private void OnGameStateChange(GameStates gameStates)
+    {
+        if (gameStates == GameStates.LevelCompleted || gameStates == GameStates.LevelFailed)
+        {
+            collider.enabled = false;
+        }
     }
 
     private void DisableInteraction()

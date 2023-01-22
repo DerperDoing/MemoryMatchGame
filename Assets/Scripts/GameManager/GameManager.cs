@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public enum GameStates
@@ -20,6 +16,10 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField]
     private LevelDatas levelDatas;
+
+    [Space]
+    [SerializeField]
+    private Canvas uiCanvas;
 
     [Header("Prefabs to Spawn")]
     [SerializeField]
@@ -53,8 +53,6 @@ public class GameManager : MonoBehaviour
 
     private int cardOpenedCount;
 
-    private Canvas uiCanvas;
-
     private void OnEnable()
     {
         EventAggregator.changeGameStateEvent += OnStateChange;
@@ -73,14 +71,13 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        cardOpenedCount = 0;
-
-        uiCanvas = FindObjectsOfType<Canvas>().ToList().First(a => a.CompareTag("UICanvas") == true);        
+        ResetOpenedCardCount();
     }
 
+    //TODO: Remove later
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetKeyUp(KeyCode.S))
         {            
             LoadLevel(testLevel);            
         }
@@ -99,6 +96,7 @@ public class GameManager : MonoBehaviour
                 break;
 
             case GameStates.Game:
+                SpawnGame();
                 break;
 
             case GameStates.StartLevel:
@@ -137,16 +135,29 @@ public class GameManager : MonoBehaviour
         levelSelectGO = Instantiate(levelSelectPrefab, uiCanvas.transform);
     }
 
-    private void LoadLevel(int levelIndex)
+    private void SpawnGame()
     {
+        ClearCanvas();
+
+        gameUIGO = Instantiate(gameUIPrefab, uiCanvas.transform);
+    }
+
+    private void LoadLevel(int levelIndex)
+    {        
+        ResetOpenedCardCount();
+
         currentLevelIndex = levelIndex;
 
+        if (homeGO != null) Destroy(homeGO);        
         if (levelSelectGO != null) Destroy(levelSelectGO);
+
         if (gameUIGO == null)
         {
             gameUIGO = Instantiate(gameUIPrefab, uiCanvas.transform);
             startButtonGO = gameUIGO.transform.Find("StartButton").gameObject;
         }
+
+        if (startButtonGO != null) startButtonGO.SetActive(true);
 
         if (cardsGeneratorGO != null) Destroy(cardsGeneratorGO);
         cardsGeneratorGO = Instantiate(cardsGeneratorPrefab);
@@ -196,7 +207,7 @@ public class GameManager : MonoBehaviour
         }
     } 
 
-    private void ResetOpenedCardCount(bool val)
+    private void ResetOpenedCardCount(bool val = true)
     {
         cardOpenedCount = 0;
     }
